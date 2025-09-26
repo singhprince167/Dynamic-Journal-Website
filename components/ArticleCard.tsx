@@ -1,9 +1,7 @@
-// app/components/ArticleCard.tsx
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
-export interface ArticleProps {
-  id: string;
+interface ArticleProps {
   title: string;
   authors: string[];
   doi: string;
@@ -15,37 +13,42 @@ export interface ArticleProps {
 }
 
 const ArticleCard: React.FC<{ article: ArticleProps }> = ({ article }) => {
-  const [showFullAbstract, setShowFullAbstract] = useState(false);
-
   return (
-    <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-      <h2 className="text-xl font-semibold mb-1 text-gray-800">{article.title}</h2>
-      <p className="text-gray-600 mb-2">{article.authors.join(", ")}</p>
-      <p className="text-gray-500 text-sm mb-2">DOI: {article.doi}</p>
+    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition w-full max-w-4xl mx-auto mb-6">
+      {/* Title */}
+      <h2 className="text-2xl font-semibold text-gray-800 mb-2">{article.title}</h2>
+
+      {/* Authors */}
       <p className="text-gray-700 mb-2">
-        {showFullAbstract
-          ? article.abstract
-          : article.abstract.length > 100
-          ? article.abstract.slice(0, 100) + "..."
-          : article.abstract}
-        {article.abstract.length > 100 && (
-          <button
-            onClick={() => setShowFullAbstract(!showFullAbstract)}
-            className="text-blue-600 hover:underline ml-2 text-sm"
-          >
-            {showFullAbstract ? "Show Less" : "Read More"}
-          </button>
-        )}
+        <span className="font-medium">Authors:</span> {article.authors.join(", ")}
       </p>
+
+      {/* DOI */}
+      <p className="text-gray-500 text-sm mb-2">
+        <span className="font-medium">DOI:</span> {article.doi}
+      </p>
+
+      {/* Abstract */}
+      <p className="text-gray-700 mb-3">
+        <span className="font-medium">Abstract:</span> {article.abstract}
+      </p>
+
+      {/* Keywords */}
+      <p className="text-gray-500 text-sm mb-2">
+        <span className="font-medium">Keywords:</span> {article.keywords.join(", ")}
+      </p>
+
+      {/* Page Numbers */}
       <p className="text-gray-500 text-sm mb-4">
-        Keywords: {article.keywords.join(", ")}
+        <span className="font-medium">Pages:</span> {article.pageNumbers}
       </p>
-      <p className="text-gray-500 text-sm mb-4">Pages: {article.pageNumbers}</p>
-      <div className="flex flex-wrap gap-4">
+
+      {/* Download Buttons */}
+      <div className="flex flex-wrap gap-3">
         <a
           href={article.pdfUrl}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm"
           target="_blank"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
         >
           Download PDF
         </a>
@@ -53,8 +56,8 @@ const ArticleCard: React.FC<{ article: ArticleProps }> = ({ article }) => {
           <a
             key={idx}
             href={file}
+            className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition text-sm"
             target="_blank"
-            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
           >
             Supplementary {idx + 1}
           </a>

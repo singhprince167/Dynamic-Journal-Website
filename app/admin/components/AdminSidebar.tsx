@@ -1,0 +1,44 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const AdminSidebar: React.FC = () => {
+  const pathname = usePathname();
+
+  const links = [
+    { href: "/admin/issues", label: "Issue Management" },
+    { href: "/admin/articles", label: "Article CRUD" },
+    { href: "/admin/editorial-board", label: "Editorial Board" },
+    { href: "/admin/indexing", label: "Indexing & Metrics" },
+    { href: "/admin/announcements", label: "Announcements" },
+    { href: "/admin/submissions", label: "Submissions" },
+    { href: "/admin/users", label: "Users & Roles" },
+    { href: "/admin/static-pages", label: "Static Pages" },
+    { href: "/admin/reports", label: "Reports & Exports" },
+    { href: "/admin/audit-logs", label: "Audit Logs" },
+  ];
+
+  return (
+    <aside className="w-64 bg-white text-gray-800 border-r min-h-screen p-6">
+      <h2 className="font-bold text-xl mb-6">Admin Panel</h2>
+      <ul className="space-y-2">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className={`block px-3 py-2 rounded-md text-sm font-medium transition ${
+                pathname === link.href
+                  ? "bg-blue-600 text-white"
+                  : "hover:bg-gray-100"
+              }`}
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  );
+};
+
+export default AdminSidebar;

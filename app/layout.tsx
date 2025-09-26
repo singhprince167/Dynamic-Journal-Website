@@ -7,22 +7,14 @@ export const metadata = {
   description: "A modern, dynamic journal website",
 };
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-}
-
-const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="bg-gray-50">
         <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}

@@ -1,7 +1,10 @@
-import ArticleCard, { ArticleProps } from "@/components/ArticleCard";
+// app/issues/[id]/page.tsx
+"use client";
 
-// Sample articles
-const sampleArticles: ArticleProps[] = [
+import ArticleCard from "@/components/ArticleCard";
+
+// Dummy articles for UI testing
+const sampleArticles = [
   {
     id: "a1",
     title: "AI in Healthcare: Trends and Challenges",
@@ -25,22 +28,22 @@ const sampleArticles: ArticleProps[] = [
   },
 ];
 
-// Props interface to get params from App Router
-interface IssueDetailPageProps {
+interface PageProps {
   params: { id: string };
 }
 
-// Make page async (Next.js 15+ App Router best practice)
-const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
+const IssueDetailPage = ({ params }: PageProps) => {
   const { id } = params;
 
   return (
-    <main className="bg-white text-gray-800 max-w-5xl mx-auto px-4 py-12 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">
+    <main className="max-w-6xl mx-auto px-4 py-12">
+      {/* Page Title */}
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">
         Volume {id} - Articles
       </h1>
 
-      <div className="space-y-6">
+      {/* Articles List */}
+      <div className="flex flex-col gap-6">
         {sampleArticles.map((article) => (
           <ArticleCard key={article.id} article={article} />
         ))}
