@@ -2,11 +2,16 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-const announcements: string[] = [
-  "📢 Call for Papers: Submit before Oct 15, 2025",
-  "✍️ Special Issue on AI in Healthcare – Submit by Nov 30, 2025",
-  "🎉 New editorial board members announced",
-  "🔔 Webinar on Research Writing – Dec 2025",
+interface Announcement {
+  text: string;
+  isNew?: boolean;
+}
+
+const announcements: Announcement[] = [
+  { text: "📢 Call for Papers: Submit before Oct 15, 2025", isNew: true },
+  { text: "✍️ Special Issue on AI in Healthcare – Submit by Nov 30, 2025" },
+  { text: "🎉 New editorial board members announced", isNew: true },
+  { text: "🔔 Webinar on Research Writing – Dec 2025" },
 ];
 
 const indexingMetrics: string[] = [
@@ -16,8 +21,9 @@ const indexingMetrics: string[] = [
 ];
 
 const HomePage: React.FC = () => {
-  const [visibleAnnouncements, setVisibleAnnouncements] = useState<string[]>(announcements);
+  const [visibleAnnouncements, setVisibleAnnouncements] = useState<Announcement[]>(announcements);
 
+  // Marquee scroll
   useEffect(() => {
     const interval = setInterval(() => {
       setVisibleAnnouncements(prev => {
@@ -29,22 +35,32 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <main className="bg-white  text-gray-800 mx-auto px-4 py-12 min-h-screen">
-      <section className="max-w-7xl mx-auto px-0 py-0 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <main className="bg-white text-gray-800 px-4 py-12 min-h-screen">
+      <section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
 
         {/* Left Column: Announcements + Indexing */}
         <div className="space-y-8 md:col-span-1">
+          {/* Announcements Box */}
           <div className="bg-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition cursor-pointer">
-            <h2 className="text-lg font-semibold mb-2">Announcements</h2>
-            <div className="h-24 flex flex-col justify-start overflow-hidden">
-              {visibleAnnouncements.map((item, i) => (
-                <div key={i} className="h-8 flex items-center text-gray-700 text-sm">
-                  {item}
-                </div>
-              ))}
+            <h2 className="text-lg font-semibold mb-3 flex justify-between items-center">
+              Announcements
+            </h2>
+
+            <div className="relative h-24 overflow-hidden">
+              <div className="absolute top-0 animate-marquee space-y-2">
+                {visibleAnnouncements.map((item, idx) => (
+                  <div key={idx} className="flex items-center text-gray-700 text-sm">
+                    {item.text}
+                    {item.isNew && (
+                      <span className="ml-2 bg-red-500 text-white text-xs px-1 rounded">NEW</span>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
+          {/* Indexing & Metrics */}
           <div className="bg-gray-100 p-6 rounded-lg shadow hover:shadow-lg transition cursor-pointer">
             <h2 className="text-lg font-semibold mb-2">Indexing & Metrics</h2>
             <ul className="text-gray-600 text-sm space-y-1">
@@ -55,7 +71,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Center Column: Hero Section */}
+        {/* Center Column: Hero */}
         <div className="md:col-span-1 text-center md:text-left space-y-6">
           <h1 className="text-4xl font-bold mb-4">Welcome to MyJournal</h1>
           <p className="text-gray-600 mb-6 max-w-xl">

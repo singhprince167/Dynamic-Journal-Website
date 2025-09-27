@@ -7,30 +7,35 @@ import IndexingDetails from "@/components/IndexingDetails";
 import AnnouncementsDetails from "@/components/AnnouncementsDetails";
 import SubmissionSystemDetails from "@/components/SubmissionSystemDetails";
 
-
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isHoveringDropdown, setIsHoveringDropdown] = useState(false);
 
   const menuItems = [
-    { label: "Current Issue & Archives", href: "/issues", details: 
-      <div>
+    {
+      label: "Current Issue & Archives",
+      href: "/issues",
+      details: (
+        <div>
           <h3 className="font-bold text-indigo-700 mb-2 text-sm">Browse Issues</h3>
           <p className="text-xs text-gray-600">
             View current issue contents and explore historical archives.
           </p>
         </div>
-     },
-    { 
-      label: "Editorial Board", 
-      href: "/editorial-board", 
+      ),
+    },
+    {
+      label: "Editorial Board",
+      href: "/editorial-board",
       details: (
         <div>
           <h3 className="font-bold text-indigo-700 mb-2 text-sm">Our Editorial Team</h3>
-          <p className="text-xs text-gray-600">Meet our Editor-in-Chief, Associate Editors, and Review Board.</p>
+          <p className="text-xs text-gray-600">
+            Meet our Editor-in-Chief, Associate Editors, and Review Board.
+          </p>
         </div>
-      )
+      ),
     },
     { label: "Author Guidelines", href: "/author-guidelines", details: <AuthorGuidelinesDetails /> },
     { label: "Peer Review & Policies", href: "/peer-review", details: <PeerReviewDetails /> },
@@ -45,22 +50,26 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-16 justify-between">
         {/* Logo */}
         <div className="flex-shrink-0 mr-8">
-          <Link href="/" className="text-2xl font-bold text-gray-800">MyJournal</Link>
+          <Link href="/" className="text-2xl font-bold text-gray-800">
+            MyJournal
+          </Link>
         </div>
 
         {/* Desktop Center Menu */}
         <div className="flex-1 flex justify-center relative">
-          <nav className="hidden md:flex space-x-5">
+          <nav className="hidden md:flex space-x-3">
             {menuItems.map((item, index) => (
               <div
                 key={index}
                 className="relative"
                 onMouseEnter={() => setActiveMenu(item.label)}
-                onMouseLeave={() => { if (!isHoveringDropdown) setActiveMenu(null); }}
+                onMouseLeave={() => {
+                  if (!isHoveringDropdown) setActiveMenu(null);
+                }}
               >
                 <Link
                   href={item.href}
-                  className="text-gray-600 hover:text-gray-800 text-xs md:text-[11px] font-bold transition duration-200"
+                  className="px-3 py-2 text-gray-600 hover:text-gray-800 text-xs md:text-[10px] font-bold border border-transparent hover:border-indigo-500 rounded transition duration-200 whitespace-nowrap"
                 >
                   {item.label}
                 </Link>
@@ -68,14 +77,18 @@ const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          {/* Full-width dropdown */}
-          {activeMenu && menuItems.find(item => item.label === activeMenu)?.details && (
+          {/* Dropdown */}
+          {activeMenu && menuItems.find((item) => item.label === activeMenu)?.details && (
             <div
-              className="absolute left-1/2 transform -translate-x-1/2 top-11 min-w-max w-full bg-white shadow-lg border-t border-gray-200 py-6 px-8 z-40"
+              className="absolute inset-x-0 top-11 bg-white shadow-lg border-t border-gray-200 py-6 px-8 z-40"
+
               onMouseEnter={() => setIsHoveringDropdown(true)}
-              onMouseLeave={() => { setIsHoveringDropdown(false); setActiveMenu(null); }}
+              onMouseLeave={() => {
+                setIsHoveringDropdown(false);
+                setActiveMenu(null);
+              }}
             >
-              {menuItems.find(item => item.label === activeMenu)?.details}
+              {menuItems.find((item) => item.label === activeMenu)?.details}
             </div>
           )}
         </div>

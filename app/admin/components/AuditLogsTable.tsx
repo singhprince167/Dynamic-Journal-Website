@@ -15,8 +15,8 @@ interface AuditLogsTableProps {
 
 const AuditLogsTable: React.FC<AuditLogsTableProps> = ({ logs }) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full text-black border border-gray-200 rounded-lg text-sm">
+    <div className="overflow-x-auto rounded-lg shadow-md bg-white">
+      <table className="min-w-[700px] w-full border border-gray-200 text-sm text-black divide-y divide-gray-200">
         <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
           <tr>
             <th className="px-4 py-3 text-left">ID</th>
@@ -26,9 +26,9 @@ const AuditLogsTable: React.FC<AuditLogsTableProps> = ({ logs }) => {
             <th className="px-4 py-3 text-left">Details</th>
           </tr>
         </thead>
-        <tbody className="text-gray-700">
+        <tbody>
           {logs.map((log) => (
-            <tr key={log.id} className="border-t hover:bg-gray-50">
+            <tr key={log.id} className="hover:bg-gray-50 transition">
               <td className="px-4 py-2">{log.id}</td>
               <td className="px-4 py-2">{log.action}</td>
               <td className="px-4 py-2">{log.user}</td>
